@@ -1,14 +1,17 @@
-function getProfits(buyPrice, sellPrices) {
-  return sellPrices.map(sellPrice => sellPrice - buyPrice);
+function maxPrice(prices) {
+  return Math.max.apply(Math, prices);
+}
+
+function validateInput(prices) {
+  if (prices.length < 2) {
+    throw new Error('Getting a profit requires at least 2 prices');
+  }
 }
 
 function getMaxProfit(prices) {
-  let profits = [];
-  prices.forEach((value, i) => {
-    let sellPrices = prices.slice(i + 1);
-    if (sellPrices.length > 0) {
-      profits = profits.concat(getProfits(value, sellPrices));
-    }
+  const profits = prices.map((value, i) => {
+    let sellPrice = maxPrice(prices.slice(i + 1));
+    return sellPrice - value;
   });
-  return Math.max.apply(Math, profits);
+  return maxPrice(profits);
 }
